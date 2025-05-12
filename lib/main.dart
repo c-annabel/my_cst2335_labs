@@ -48,6 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void buttonClicked(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +69,14 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize:myFontSize),
             ),
             Image.asset("images/algonquin.jpg", width: 200, height:200),
-            Slider(value:_counter, max:100.0, onChanged: setNewValue, min:0.0)
+            ElevatedButton(
+                onPressed: buttonClicked,
+                child:Image.asset("images/algonquin.jpg", width: 200, height:200)
+            )
+            //20250512-02 replaced by image
+            //ElevatedButton( onPressed: buttonClicked, child:  Text("Click me")  ),
+            //20250512-01 replaced by button
+            //Slider(value:_counter, max:100.0, onChanged: setNewValue, min:0.0)
           ],
         ),
       ),
