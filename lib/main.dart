@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var _counter = 0.0;
   var myFontSize = 30.0;
+  bool? isChecked = false;
 
   void setNewValue(double value) {
     setState(() {
@@ -68,15 +69,27 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize:myFontSize),
             ),
-            Image.asset("images/algonquin.jpg", width: 200, height:200),
+            // Padding(
+            //   padding: EdgeInsets.all(20.0),
+            //   child: Image.asset("images/algonquin.jpg", width: 200, height:200),
+            // ),
+            Semantics(
+                child: Image.asset("images/algonquin.jpg", width: 200, height:200),
+                label:'This image is a image of Algonquin College.'),
             ElevatedButton(
                 onPressed: buttonClicked,
-                child:Image.asset("images/algonquin.jpg", width: 200, height:200)
-            )
+                child:Image.asset("images/algonquin.jpg", width: 200, height:200),
+            ),
             //20250512-02 replaced by image
             //ElevatedButton( onPressed: buttonClicked, child:  Text("Click me")  ),
             //20250512-01 replaced by button
             //Slider(value:_counter, max:100.0, onChanged: setNewValue, min:0.0)
+            Checkbox(value: isChecked, onChanged: (newValue) {
+               setState(() {
+                   isChecked = newValue; //store the new value
+               });
+
+            } ),
           ],
         ),
       ),
