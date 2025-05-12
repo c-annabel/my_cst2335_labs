@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var _counter = 0.0;
   var myFontSize = 30.0;
   bool? isChecked = false;
+  var isSwitched = false;
 
   void setNewValue(double value) {
     setState(() {
@@ -88,8 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
                setState(() {
                    isChecked = newValue; //store the new value
                });
-
-            } ),
+            }),
+            Switch(value: isSwitched, onChanged: (newValue) {
+              if (newValue != null ) {
+                setState(() {
+                  isSwitched = newValue;
+                });
+              }
+            }),
           ],
         ),
       ),
