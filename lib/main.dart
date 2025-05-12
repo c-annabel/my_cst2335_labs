@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize:myFontSize),
             ),
+            Image.asset("images/algonquin.jpg", width: 200, height:200),
             Slider(value:_counter, max:100.0, onChanged: setNewValue, min:0.0)
           ],
         ),
