@@ -80,20 +80,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
             ),
             ElevatedButton(
-              onPressed: () {
-                // get the string that was typed in the password field
-                 password = _controller2.text;// <--- lambda function
-                 setState(() {
-                     if (password == 'QWERTY123') {
-                       imageSource = "images/idea.png";
-                     }
-                     else {
-                       imageSource = "images/stop.png";
-                     }
-                 });
-
-              },
-               child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
+                onPressed: () {
+                  // get the string that was typed in the password field
+                   password = _controller2.text;// <--- lambda function
+                   setState(() {
+                       if (password == 'QWERTY123') {
+                         imageSource = "images/idea.png";
+                       }
+                       else {
+                         imageSource = "images/stop.png";
+                       }
+                   });
+                }, // onPressed
+                child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
             ),
             Semantics (
                 label:imageSource,
