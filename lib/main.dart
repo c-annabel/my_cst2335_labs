@@ -91,10 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
             Semantics(
                 child: Image.asset("images/algonquin.jpg", width: 200, height:200),
                 label:'This image is a image of Algonquin College.'),
+            // ElevatedButton(
+            //     onPressed: buttonClicked,
+            //     child:Image.asset("images/algonquin.jpg", width: 200, height:200),
+            // ),
+            // Test 2
             ElevatedButton(
-                onPressed: buttonClicked,
-                child:Image.asset("images/algonquin.jpg", width: 200, height:200),
-            ),
+                onPressed: () {   // <--- lambda function
+                  _controller.text = "You clicked the button"; },
+                  child:Image.asset("images/algonquin.jpg", width: 200, height:200),
+                ),
             //20250512-02 replaced by image
             //ElevatedButton( onPressed: buttonClicked, child:  Text("Click me")  ),
             //20250512-01 replaced by button
