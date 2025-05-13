@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var myFontSize = 30.0;
   bool? isChecked = false;
   var isSwitched = false;
+  late TextEditingController _controller; // this is to read what is typed
+  late String name; // nothing yet, but not null
 
   void setNewValue(double value) {
     setState(() {
@@ -52,6 +54,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void buttonClicked(){
 
+  }
+
+  @override
+  void initState() { // similar to onloaded= (in html)
+    super.initState();
+    _controller = TextEditingController(); //making _controller
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose(); //free the memory of what was typed
   }
 
   @override
@@ -97,6 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               }
             }),
+            TextField(controller: _controller,
+                decoration: InputDecoration(
+                    hintText:"Type here",
+                    border: OutlineInputBorder(),
+                    labelText: "First name"
+                )
+            ),
           ],
         ),
       ),
