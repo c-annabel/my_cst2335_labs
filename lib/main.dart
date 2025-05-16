@@ -89,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //   child: Image.asset("images/algonquin.jpg", width: 200, height:200),
             // ),
             Semantics(
-                child: Image.asset("images/algonquin.jpg", width: 200, height:200),
-                label:'This image is a image of Algonquin College.'),
+                label:'This image is a image of Algonquin College.',
+                child: Image.asset("images/algonquin.jpg", width: 200, height:200)),
             // ElevatedButton(
             //     onPressed: buttonClicked,
             //     child:Image.asset("images/algonquin.jpg", width: 200, height:200),
@@ -111,12 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
                });
             }),
             Switch(value: isSwitched, onChanged: (newValue) {
-              if (newValue != null ) {
-                setState(() {
-                  isSwitched = newValue;
-                });
-              }
-            }),
+              setState(() {
+                isSwitched = newValue;
+              });
+                        }),
             TextField(controller: _controller,
                 decoration: InputDecoration(
                     hintText:"Type here",
