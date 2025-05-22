@@ -66,31 +66,53 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-              }, // onPressed
-              child:Text("Button 1"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-              }, // onPressed
-              child:Text("Button 2"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-              }, // onPressed
-              child:Text("Button 3"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-              }, // onPressed
-              child:Text("Button 4"),
-            ),
-          ],
-        ),
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // children: <Widget>[
+          //   ElevatedButton(
+          //     onPressed: () {
+          //     }, // onPressed
+          //     child:Text("Button 1"),
+          //   ),
+          //   ElevatedButton(
+          //     onPressed: () {
+          //     }, // onPressed
+          //     child:Text("Button 2"),
+          //   ),
+          //   ElevatedButton(
+          //     onPressed: () {
+          //     }, // onPressed
+          //     child:Text("Button 3"),
+          //   ),
+          //   ElevatedButton(
+          //     onPressed: () {
+          //     }, // onPressed
+          //     child:Text("Button 4"),
+          //   ),
+          // ],
+          crossAxisAlignment: CrossAxisAlignment.start,  children: <Widget>[
+          Stack(
+              children: <Widget>[
+                Image.asset("images/algonquin.jpg"),
+                Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child: Text(
+                    "Algonquin College",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ]),
+
+          Text("One-pan skillet Cookie", style: TextStyle(fontSize: 30.0),),
+          Text("Ingredient List", style: TextStyle(fontSize: 20.0)),
+          Row( mainAxisAlignment: MainAxisAlignment.center, children: [ Icon(Icons.star), Text("1 stick [8 TBSP] Unsalted butter")],),
+          Row( mainAxisAlignment: MainAxisAlignment.center,  children: [ Icon(Icons.star), Text("2 stick [8 TBSP] Unsalted butter")],)
+
+        ],),
       ),
+
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem( icon: Icon(Icons.camera), label: 'Camera'  ),
         BottomNavigationBarItem( icon: Icon(Icons.add_call), label: 'Phone' ),
