@@ -95,7 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem( icon: Icon(Icons.camera), label: 'Camera'  ),
         BottomNavigationBarItem( icon: Icon(Icons.add_call), label: 'Phone' ),
-      ], onTap:(btnIndex){  }  )
+      ],
+        onTap:(btnIndex){  }  )
     );
   }
 }
