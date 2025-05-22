@@ -10,6 +10,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
       title: 'Flutter Demo',
       theme: ThemeData(
 
@@ -56,9 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:Drawer(child:Text("Hi there")),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(widget.title), actions: [
+            OutlinedButton(onPressed: () { }, child:Text("Button 1")),
+            OutlinedButton(onPressed: (){ }, child: Text("Button 2"))]
       ),
       body: Center(
         child: Column(
@@ -87,6 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem( icon: Icon(Icons.camera), label: 'Camera'  ),
+        BottomNavigationBarItem( icon: Icon(Icons.add_call), label: 'Phone' ),
+      ], onTap:(btnIndex){  }  )
     );
   }
 }
