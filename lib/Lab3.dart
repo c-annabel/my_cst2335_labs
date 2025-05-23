@@ -41,13 +41,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
 
           child:
+
              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(36.0),
+                      padding: EdgeInsets.fromLTRB(36.0, 46.0, 36.0, 28.0),
                       color: Colors.green[900],
                       width: double.infinity,
+
                       child: Text(
                         widget.title,
                         textAlign: TextAlign.center,
@@ -57,12 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 
                     Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 6.0, 8.0, 10.0),
+                      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
                       child:
                         Text(
                           "Not sure about exactly which recipe you're looking for? "
                           "Do a search, or dive into our most popular categories.",
-                          // textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15.0,
                                            fontWeight: FontWeight.bold,)
                         ),
@@ -72,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     Container(
                       padding: EdgeInsets.fromLTRB(10.0, 6.0, 8.0, 10.0),
-                      color: Colors.grey[200],
                       child: Column(
                         children: [
                           Row(
@@ -92,14 +92,108 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           SizedBox(height: 10),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Row 1, Item 1'),
-                              Spacer(),
-                              Text('Row 1, Item 2'),
-                              Spacer(),
-                              Text('Row 1, Item 3'),
-                              Spacer(),
-                              Text('Row 1, Item 4'),
+                              Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      backgroundImage: AssetImage('images/beef.jpg'),
+                                      radius:45,
+                                    ),
+                                    Text(
+                                        "BEEF",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          shadows: [
+                                            Shadow(
+                                              offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                              blurRadius: 4.0,          // softening effect
+                                              color: Colors.black87 // shadow color
+                                            ),
+                                          ],
+                                        ),
+                                    ),
+                                  ],
+                              ),
+
+                              Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/chicken.jpg'),
+                                    radius:45,
+                                  ),
+                                  Text(
+                                    "CHICKEN",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                            blurRadius: 4.0,          // softening effect
+                                            color: Colors.black87 // shadow color
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/pork.jpg'),
+                                    radius:45,
+                                  ),
+                                  Text(
+                                    "PORK",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                            blurRadius: 4.0,          // softening effect
+                                            color: Colors.black87 // shadow color
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/seafood.jpg'),
+                                    radius:45,
+                                  ),
+                                  Text(
+                                    "SEAFOOD",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                            blurRadius: 4.0,          // softening effect
+                                            color: Colors.black87 // shadow color
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
                             ],
                           ),
                           SizedBox(height: 20),
