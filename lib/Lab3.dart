@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body:
         Container(
+          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 40.0),
           // margin: EdgeInsets.all(2.0), // optional spacing from screen edge
           decoration: BoxDecoration(
           border: Border.all(color: Colors.green[900]!, width: 6),
@@ -44,13 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
           child:
 
              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
 
                     // 1. Header
                     Container(
-                      padding: EdgeInsets.fromLTRB(36.0, 46.0, 36.0, 28.0),
+                      padding: EdgeInsets.all(36.0),
                       color: Colors.green[900],
                       width: double.infinity,
 
@@ -64,14 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     // 2. Description
                     Padding(
-                      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+                      padding: EdgeInsets.fromLTRB(10.0, 00, 10.0, 0.0),
                       child:
-                        Text(
+                      Text(
                           "Not sure about exactly which recipe you're looking for? "
                           "Do a search, or dive into our most popular categories.",
                           style: TextStyle(fontSize: 15.0,
                                            fontWeight: FontWeight.bold,)
-                        ),
+                      ),
                     ),
 
                     //----MAIN CATEGORIES START---------------------------------------------------//
@@ -299,10 +302,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ], // children
                         ),
-
-
-
-
                       ], // end of children
                     ),
 
@@ -409,6 +408,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ], // children
                       ),
+
+
                     ], // end of children
                   ),
 
