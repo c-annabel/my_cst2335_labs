@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // margin: EdgeInsets.all(2.0), // optional spacing from screen edge
           decoration: BoxDecoration(
           border: Border.all(color: Colors.green[900]!, width: 6),
+          borderRadius: BorderRadius.circular(58),
           ),
 
           child:
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                )
                             ],
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -193,10 +194,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ],
                               ),
-
-                            ],
+                            ], // end of children
                           ),
-                          SizedBox(height: 20),
+
+                          SizedBox(height: 30),
+
                           Row(
                             children: [
                               Expanded(
@@ -212,19 +214,94 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ],
                           ),
-                          SizedBox(height: 10),
+
+                          SizedBox(height: 15),
+
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Row 2, Item 1'),
-                              Spacer(),
-                              Text('Row 2, Item 2'),
-                              Spacer(),
-                              Text('Row 2, Item 3'),
-                              Spacer(),
-                              Text('Row 2, Item 4'),
-                            ],
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                    CircleAvatar(
+                                      backgroundImage: AssetImage('images/maindishes.jpg'),
+                                      radius: 45,
+                                    ),
+                                    SizedBox(height: 8), // spacing between image and text
+                                    Text(
+                                      "Main Dishes",
+                                      style: TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/salad.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Salad Recipes",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/sidedishes.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Side Dishes",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/crockpot.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Crockpot",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ], // end of children
                           ),
-                          SizedBox(height: 20),
+
+                          SizedBox(height: 30),
+
                           Row(
                             children: [
                               Expanded(
@@ -240,19 +317,92 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ],
                           ),
-                          SizedBox(height: 10),
+
+                          SizedBox(height: 15),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Row 3, Item 1'),
-                              Spacer(),
-                              Text('Row 3, Item 2'),
-                              Spacer(),
-                              Text('Row 3, Item 3'),
-                              Spacer(),
-                              Text('Row 3, Item 4'),
-                            ],
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/icecream.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Ice Cream",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/brownies.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Brownies",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/pies.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Pies",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage('images/cookies.jpg'),
+                                    radius: 45,
+                                  ),
+                                  SizedBox(height: 8), // spacing between image and text
+                                  Text(
+                                    "Cookies",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            ], // end of children
                           ),
-                        ],
+
+                        ], // end of Children.
                       ),
                     )
 
