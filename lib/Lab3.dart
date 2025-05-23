@@ -11,19 +11,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Lab3 : Flutter Demo',
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 3 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'BROWSE  CATEGORIES'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -31,93 +28,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var myFontSize = 30.0;
-  late TextEditingController _controller1; // this is to read what is typed
-  late TextEditingController _controller2; // this is to read what is typed
-  late String password; // nothing yet, but not null
-  var imageSource = "images/question-mark.png";
-
-  void buttonClicked(){
-  }
-
-  @override
-  void initState() { // similar to onloaded= (in html)
-    super.initState();
-    _controller1 = TextEditingController(); //making _controller
-    _controller2 = TextEditingController(); //making _controller
-  }
-
-  @override
-  void dispose() {
-    _controller1.dispose();
-    _controller2.dispose();
-    super.dispose(); //free the memory of what was typed
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer:Drawer(child:Text("Hi there")),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title), actions: [
-            OutlinedButton(onPressed: () { }, child:Text("Button 1")),
-            OutlinedButton(onPressed: (){ }, child: Text("Button 2"))]
-      ),
-      body: Center(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // children: <Widget>[
-          //   ElevatedButton(
-          //     onPressed: () {
-          //     }, // onPressed
-          //     child:Text("Button 1"),
-          //   ),
-          //   ElevatedButton(
-          //     onPressed: () {
-          //     }, // onPressed
-          //     child:Text("Button 2"),
-          //   ),
-          //   ElevatedButton(
-          //     onPressed: () {
-          //     }, // onPressed
-          //     child:Text("Button 3"),
-          //   ),
-          //   ElevatedButton(
-          //     onPressed: () {
-          //     }, // onPressed
-          //     child:Text("Button 4"),
-          //   ),
-          // ],
-          crossAxisAlignment: CrossAxisAlignment.start,  children: <Widget>[
-          Stack(
-              children: <Widget>[
-                Image.asset("images/algonquin.jpg"),
-                Align(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  child: Text(
-                    "Algonquin College",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      backgroundColor: Colors.white,
+
+      body:
+        Container(
+          // margin: EdgeInsets.all(2.0), // optional spacing from screen edge
+          decoration: BoxDecoration(
+          border: Border.all(color: Colors.green[900]!, width: 6),
+          ),
+
+          child:
+             Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(36.0),
+                    color: Colors.green[900],
+                    width: double.infinity,
+                    child: Text(
+                      widget.title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 24, color: Colors.white,
+                             fontWeight: FontWeight.bold, letterSpacing: 2.0,),
                     ),
                   ),
-                ),
-              ]),
 
-          Text("One-pan skillet Cookie", style: TextStyle(fontSize: 30.0),),
-          Text("Ingredient List", style: TextStyle(fontSize: 20.0)),
-          Row( mainAxisAlignment: MainAxisAlignment.center, children: [ Icon(Icons.star), Text("1 stick [8 TBSP] Unsalted butter")],),
-          Row( mainAxisAlignment: MainAxisAlignment.center,  children: [ Icon(Icons.star), Text("2 stick [8 TBSP] Unsalted butter")],)
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10.0, 6.0, 8.0, 10.0),
+                    child:
+                      Text(
+                        "Not sure about exactly which recipe you're looking for? "
+                        "Do a search, or dive into our most popular categories.",
+                        // textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 15.0,
+                                         fontWeight: FontWeight.bold,)
+                      ),
+                  ),
 
-        ],),
-      ),
+                ],
+             ),
 
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem( icon: Icon(Icons.camera), label: 'Camera'  ),
-        BottomNavigationBarItem( icon: Icon(Icons.add_call), label: 'Phone' ),
-      ],
-        onTap:(btnIndex){  }  )
+        ),
     );
-  }
-}
+  } // end of Widget
+} // end of class MyHomePageState
