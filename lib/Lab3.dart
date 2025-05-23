@@ -44,8 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
           child:
 
-             Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             Column(                                                //** 1. 8 items in the Column()
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,  //** 2. Uses spaceBetween
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       child: Text(
                         widget.title,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,                            //** 3. texts are properly aligned
                         style: TextStyle(fontSize: 24, color: Colors.white,
                                fontWeight: FontWeight.bold, letterSpacing: 2.0,),
                       ),
@@ -91,8 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     // 4. MEAT Categories
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,  //** 4. Uses spaceAround for images
                       children: [
+
+                        //** 5. corresponding text either in the middle or at the bottom overlapping the image using a Stack( )
                         Stack(
                             alignment: AlignmentDirectional.center,
                             children: <Widget>[
