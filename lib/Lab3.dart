@@ -45,7 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                    // 1. Header
                     Container(
                       padding: EdgeInsets.fromLTRB(36.0, 46.0, 36.0, 28.0),
                       color: Colors.green[900],
@@ -59,7 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
 
-                    Container(
+                    // 2. Description
+                    Padding(
                       padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
                       child:
                         Text(
@@ -72,345 +76,367 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     //----MAIN CATEGORIES START---------------------------------------------------//
 
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 6.0, 8.0, 10.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                               Expanded(
-                                 child: Center(
-                                   child:
-                                   Text(
-                                       "BY MEAT",
-                                       textAlign: TextAlign.center,
-                                       style: TextStyle(fontSize: 20.0,
-                                         fontWeight: FontWeight.bold,)
-                                   ),
-                                 )
-                               )
-                            ],
-                          ),
-                          SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      backgroundImage: AssetImage('images/beef.jpg'),
-                                      radius:45,
-                                    ),
-                                    Text(
-                                        "BEEF",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          shadows: [
-                                            Shadow(
-                                              offset: Offset(2.0, 2.0), // horizontal and vertical shadow
-                                              blurRadius: 4.0,          // softening effect
-                                              color: Colors.black87 // shadow color
-                                            ),
-                                          ],
-                                        ),
-                                    ),
-                                  ],
+                    // 3. BY MEAT title
+                    Center(
+                      child:
+                        Text(
+                            "BY MEAT",
+                            style: TextStyle(fontSize: 20.0,
+                              fontWeight: FontWeight.bold,)
+                        ),
+                    ),
+
+                    // 4. MEAT Categories
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundImage: AssetImage('images/beef.jpg'),
+                                radius:47,
                               ),
-
-                              Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/chicken.jpg'),
-                                    radius:45,
-                                  ),
-                                  Text(
-                                    "CHICKEN",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
-                                            blurRadius: 4.0,          // softening effect
-                                            color: Colors.black87 // shadow color
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/pork.jpg'),
-                                    radius:45,
-                                  ),
-                                  Text(
-                                    "PORK",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
-                                            blurRadius: 4.0,          // softening effect
-                                            color: Colors.black87 // shadow color
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/seafood.jpg'),
-                                    radius:45,
-                                  ),
-                                  Text(
-                                    "SEAFOOD",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                            offset: Offset(2.0, 2.0), // horizontal and vertical shadow
-                                            blurRadius: 4.0,          // softening effect
-                                            color: Colors.black87 // shadow color
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ], // end of children
-                          ),
-
-                          SizedBox(height: 30),
-
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Center(
-                                    child:
-                                    Text(
-                                        "BY COURSE",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,)
-                                    ),
-                                  )
-                              )
-                            ],
-                          ),
-
-                          SizedBox(height: 15),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                    CircleAvatar(
-                                      backgroundImage: AssetImage('images/maindishes.jpg'),
-                                      radius: 45,
-                                    ),
-                                    SizedBox(height: 8), // spacing between image and text
-                                    Text(
-                                      "Main Dishes",
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                              Text(
+                                  "BEEF",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                        blurRadius: 4.0,          // softening effect
+                                        color: Colors.black87 // shadow color
                                       ),
-                                    ),
-                                ],
+                                    ],
+                                  ),
                               ),
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/salad.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Salad Recipes",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/sidedishes.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Side Dishes",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/crockpot.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Crockpot",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                            ], // end of children
-                          ),
-
-                          SizedBox(height: 30),
-
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Center(
-                                    child:
-                                    Text(
-                                        "BY DESSERT",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,)
-                                    ),
-                                  )
-                              )
                             ],
-                          ),
+                        ),
 
-                          SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/icecream.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Ice Cream",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/chicken.jpg'),
+                              radius:47,
+                            ),
+                            Text(
+                              "CHICKEN",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                      offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                      blurRadius: 4.0,          // softening effect
+                                      color: Colors.black87 // shadow color
                                   ),
                                 ],
                               ),
+                            ),
+                          ],
+                        ),
 
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/brownies.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Brownies",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/pork.jpg'),
+                              radius:47,
+                            ),
+                            Text(
+                              "PORK",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                      offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                      blurRadius: 4.0,          // softening effect
+                                      color: Colors.black87 // shadow color
                                   ),
                                 ],
                               ),
+                            ),
+                          ],
+                        ),
 
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/pies.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Pies",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage('images/cookies.jpg'),
-                                    radius: 45,
-                                  ),
-                                  SizedBox(height: 8), // spacing between image and text
-                                  Text(
-                                    "Cookies",
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/seafood.jpg'),
+                              radius:47,
+                            ),
+                            Text(
+                              "SEAFOOD",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                      offset: Offset(2.0, 2.0), // horizontal and vertical shadow
+                                      blurRadius: 4.0,          // softening effect
+                                      color: Colors.black87 // shadow color
                                   ),
                                 ],
                               ),
+                            ),
+                          ],
+                        ),
+                      ], // end of children
+                    ),
 
-                            ], // end of children
-                          ),
-
-                        ], // end of Children.
+                    // 5. BY COURSE title
+                    Center(
+                      child:
+                      Text(
+                          "BY COURSE",
+                          style: TextStyle(fontSize: 20.0,
+                            fontWeight: FontWeight.bold,)
                       ),
-                    )
+                    ),
 
+                    // 6. COURSE Categories
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+
+                        Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          clipBehavior: Clip.none, // allows positioning outside the bounds
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/maindishes.jpg'),
+                              radius: 47,
+                            ),
+                            Positioned(
+                              bottom: -25, // adjust as needed
+                              child: Text(
+                                "Main Dishes",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ], // children
+                        ),
+
+                        Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          clipBehavior: Clip.none, // allows positioning outside the bounds
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/salad.jpg'),
+                              radius: 47,
+                            ),
+                            Positioned(
+                              bottom: -25, // adjust as needed
+                              child: Text(
+                                "Salad Recipes",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ], // children
+                        ),
+
+
+                        Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          clipBehavior: Clip.none, // allows positioning outside the bounds
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/sidedishes.jpg'),
+                              radius: 47,
+                            ),
+                            Positioned(
+                              bottom: -25, // adjust as needed
+                              child: Text(
+                                "Side Dishes",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ], // children
+                        ),
+
+                        Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          clipBehavior: Clip.none, // allows positioning outside the bounds
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/crockpot.jpg'),
+                              radius: 47,
+                            ),
+                            Positioned(
+                              bottom: -25, // adjust as needed
+                              child: Text(
+                                "Crockpot",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ], // children
+                        ),
+
+
+
+
+                      ], // end of children
+                    ),
+
+                  // 7. BY DESSERT title
+                  Center(
+                    child:
+                    Text(
+                        "BY DESSERT",
+                        style: TextStyle(fontSize: 20.0,
+                          fontWeight: FontWeight.bold,)
+                    ),
+                  ),
+
+                  // 8. DESSERT Categories
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        clipBehavior: Clip.none, // allows positioning outside the bounds
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage('images/icecream.jpg'),
+                            radius: 47,
+                          ),
+                          Positioned(
+                            bottom: -25, // adjust as needed
+                            child: Text(
+                              "Ice Cream",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ], // children
+                      ),
+
+                      Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        clipBehavior: Clip.none, // allows positioning outside the bounds
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage('images/brownies.jpg'),
+                            radius: 47,
+                          ),
+                          Positioned(
+                            bottom: -25, // adjust as needed
+                            child: Text(
+                              "Brownies",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ], // children
+                      ),
+                      Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        clipBehavior: Clip.none, // allows positioning outside the bounds
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage('images/pies.jpg'),
+                            radius: 47,
+                          ),
+                          Positioned(
+                            bottom: -25, // adjust as needed
+                            child: Text(
+                              "Pies",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ], // children
+                      ),
+                      Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        clipBehavior: Clip.none, // allows positioning outside the bounds
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage('images/cookies.jpg'),
+                            radius: 47,
+                          ),
+                          Positioned(
+                            bottom: -25, // adjust as needed
+                            child: Text(
+                              "Cookies",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ], // children
+                      ),
+                    ], // end of children
+                  ),
+
+                              // Example of using Column to display.
+                              // Column(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //       CircleAvatar(
+                              //         backgroundImage: AssetImage('images/maindishes.jpg'),
+                              //         radius: 45,
+                              //       ),
+                              //       SizedBox(height: 8), // spacing between image and text
+                              //       Text(
+                              //         "Main Dishes",
+                              //         style: TextStyle(
+                              //           fontSize: 13.0,
+                              //           fontWeight: FontWeight.bold,
+                              //           color: Colors.black,
+                              //         ),
+                              //       ),
+                              //   ],
+                              // ),
+
+                ], // end of children
 
                     //-----MAIN CATEGORIES END---------------------------------------------------//
-                ],
-             ),
 
+             ),
         ),
     );
   } // end of Widget
