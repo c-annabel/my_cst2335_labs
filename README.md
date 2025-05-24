@@ -1,6 +1,6 @@
 # my_cst2335_labs
 
-A new Flutter project.
+New Flutter projects using Dart
 
 ## Getting Started
 
