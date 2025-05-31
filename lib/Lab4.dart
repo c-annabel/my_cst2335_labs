@@ -79,9 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: "Password"
                 )
             ),
+
             ElevatedButton(
                 onPressed: () {
                   // get the string that was typed in the password field
+
                    password = _controller2.text;// <--- lambda function
                    setState(() {
                        if (password == 'QWERTY123') {
@@ -89,6 +91,18 @@ class _MyHomePageState extends State<MyHomePage> {
                        }
                        else {
                          imageSource = "images/stop.png";
+                         // const snackBar = SnackBar(content: Text('Invalid Password!'));
+                         final snackBar = SnackBar(
+                           content: Text('Invalid Password!'),
+                           action: SnackBarAction(
+                             label: 'Hide',
+                             onPressed: () {
+                               // You can leave this empty or add behavior
+                               // For example: print('Snackbar hidden');
+                             },
+                           ),
+                         );
+                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                        }
                    });
                 }, // onPressed
