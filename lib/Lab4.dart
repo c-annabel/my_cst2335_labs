@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-
 
 
 void main() {
@@ -48,36 +46,75 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _controller1 = TextEditingController(); //making _controller
     _controller2 = TextEditingController(); //making _controller
+
+    loadEncryptedLogin();
   }
 
-  void loadLoginName() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? loginName = prefs.getString("LoginName");
+  void loadEncryptedLogin() {
+    EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+    prefs.getString("LoginName").then((String? loginName) {
+      prefs.getString("Password").then((String? passwordValue) {
+        if (loginName != null && passwordValue != null) {
+          setState(() {
+            _controller1.text = loginName;
+            _controller2.text = passwordValue;
+          });
 
-    print("Loaded LoginName: $loginName");
-
-    setState(() {
-      _controller1.text = loginName ?? '';
+          // Show SnackBar to say data was loaded
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Previous login loaded!")),
+            );
+          });
+        }
+      });
     });
   }
 
-  //The Other Method:
-  // void loadLoginName() {
-  //   SharedPreferences.getInstance().then((result) {
-  //     var loginName = result.getString("LoginName");
-  //     if (loginName != null) {
-  //       setState(() {
-  //         _controller1.text = loginName;
-  //       });
-  //     }
-  //   });
-  // }
-
-  void clearLoginName() {
-    SharedPreferences.getInstance().then((sharedPrefs) {
-      sharedPrefs.remove("LoginName");
-      print("LoginName removed.");
+  void saveEncryptedLogin() {
+    EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+    prefs.setString("LoginName", _controller1.text).then((bool success) {
+      prefs.setString("Password", _controller2.text).then((bool success2) {
+        print("Encrypted login saved.");
+      });
     });
+  }
+
+  void clearEncryptedLogin() {
+    EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
+    prefs.remove("LoginName").then((bool success) {
+      prefs.remove("Password").then((bool success2) {
+        print("Encrypted login cleared.");
+      });
+    });
+  }
+
+  void showSaveDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Save Login?"),
+          content: Text("Would you like to save your username and password?"),
+          actions: [
+            TextButton(
+              child: Text("Yes"),
+              onPressed: () {
+                saveEncryptedLogin();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("No"),
+              onPressed: () {
+                clearEncryptedLogin();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -85,23 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller1.dispose();
     _controller2.dispose();
     super.dispose(); //free the memory of what was typed
-  }
-
-  // Load and obtain the shared preferences for this app.
-  void functionName() async {
-    final prefs = await SharedPreferences.getInstance();
-  }
-
-  void buttonPressed() {
-    SharedPreferences.getInstance().then((sharedPrefs) {
-      // Save the login name that user typed
-      sharedPrefs.setString("LoginName", _controller1.text);
-
-      // Example: also save password if you want (NOT recommended for real apps!)
-      sharedPrefs.setString("Password", _controller2.text);
-
-      print("LoginName saved: ${_controller1.text}");
-    });
   }
 
   @override
@@ -113,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextField(controller: _controller1,
                 decoration: InputDecoration(
@@ -131,76 +151,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
             ),
 
-
-
-
             ElevatedButton(
                 onPressed: () {
-
-                  // Save login name to SharedPreferences
-                  buttonPressed();
 
                   // get the string that was typed in the password field
                    password = _controller2.text;// <--- lambda function
                    setState(() {
-                       if (password == 'QWERTY123') {
-                         imageSource = "images/idea.png";
-                       }
-                       else {
-                         imageSource = "images/stop.png";
-
-                         // Show AlertDialog here:
-                         showDialog(
-                           context: context,
-                           builder: (BuildContext context) {
-                             return AlertDialog(
-                               title: Text('Login Failed'),
-                               content: Text('Invalid Password! Please try again.'),
-                               actions: <Widget>[
-                                 TextButton(
-                                   child: Text('OK'),
-                                   onPressed: () {
-                                     Navigator.of(context).pop(); // Close the dialog
-                                   },
-                                 ),
-                               ],
-                             );
-                           },
-                         );
-
-                         // const snackBar = SnackBar(content: Text('Invalid Password!'));
-                         final snackBar = SnackBar(
-                           content: Text('Invalid Password!'),
-                           action: SnackBarAction(
-                             label: 'Hide',
-                             onPressed: () {
-                               // You can leave this empty or add behavior
-                               // For example: print('Snackbar hidden');
-                             },
-                           ),
-                         );
-                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                       }
-                   }
-
-
-                   );
+                       // Show dialog asking to save login info
+                       showSaveDialog();
+                   });
                 }, // onPressed
                 child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-                loadLoginName();
-              },
-              child: Text("Load Login Name")
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-                clearLoginName();
-              },
-              child: Text("Clear Login Name"),
             ),
 
             Semantics (
