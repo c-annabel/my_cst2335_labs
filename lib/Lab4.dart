@@ -36,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
   late String password; // nothing yet, but not null
-  var imageSource = "images/question-mark.png";
 
   void buttonClicked(){
   }
@@ -164,10 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
             ),
 
-            Semantics (
-                label:imageSource,
-                child: Image.asset(imageSource, width: 200, height:200)
-            ),
           ],
         ),
       ),
