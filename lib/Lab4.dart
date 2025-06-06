@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,8 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var myFontSize = 30.0;
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
-  late String loginname;
+  late String loginName;
   late String password; // nothing yet, but not null
+  final EncryptedSharedPreferences _prefs = EncryptedSharedPreferences();
 
   //show AlertDialog asking to save login info
   void buttonClicked(){
@@ -48,22 +50,34 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: [
             TextButton(
               child: Text("No"),
-              onPressed: () {
+              // Adding async in order to use await
+              onPressed: () async {
                 Navigator.of(context).pop(); // close dialog
+
+                // Clear any saved data
+                await _prefs.clear();
+
                 setState(() {
                   // clear the saved data
-                  loginname = "";
+                  loginName = "";
                   password = "";
                 });
               },
             ),
             TextButton(
               child: Text("Yes"),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop(); // close dialog
+
+                //Save to EncryptedSharedReference
+                await _prefs.setString('loginName', _controller1.text);
+                await _prefs.setString('password', _controller2.text);
+
+                print("DEBUG: Saved loginName=${_controller1.text}, password=${_controller2.text}");
+
                 setState(() {
                   // save the login name and password
-                  loginname = _controller1.text;
+                  loginName = _controller1.text;
                   password = _controller2.text;
                   //
                 });
@@ -80,6 +94,37 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _controller1 = TextEditingController(); //making _controller
     _controller2 = TextEditingController(); //making _controller
+
+    loginName = "";
+    password = "";
+
+    loadSavedData(); //load the saved login info
+  }
+
+  void loadSavedData() async {
+    try {
+      String savedLogin = await _prefs.getString('loginName');
+      String savedPassword = await _prefs.getString('password');
+
+      if (savedLogin.isNotEmpty && savedPassword.isNotEmpty) {
+        setState(() {
+          _controller1.text = savedLogin;
+          _controller2.text = savedPassword;
+        });
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Previous login name and password loaded.")),
+          );
+        });
+      } else {
+        print("DEBUG: No saved data found.");
+      }
+    }
+
+    catch (e) {
+      print("DEBUG: Exception occurred when loading saved data: $e");
+    }
   }
 
   @override
