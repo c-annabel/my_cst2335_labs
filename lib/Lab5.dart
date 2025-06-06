@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+class DataRepository {
+  static String loginName = "";
+  static int age = 0; // optional
+}
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,13 +19,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 4 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'Lab 5 : Flutter Demo by Annabel Cheng'),
     );
   }
 }
@@ -82,13 +89,43 @@ class _MyHomePageState extends State<MyHomePage> {
                   password = _controller2.text;
                   //
                 });
-              },
-            ),
+                // Save loginName in DataRepository
+
+                DataRepository.loginName = loginName;
+
+                // Now check password (example: correct password is "6789")
+                if (password == "6789") {
+                  Navigator.push<bool>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  ).then((value) {
+
+                      if (value == true) {
+                        Future.delayed(Duration(milliseconds: 100), () {
+                          scaffoldMessengerKey.currentState?.showSnackBar(
+                            SnackBar(content: Text(
+                                "Welcome Back: ${DataRepository.loginName}")),
+                          );
+                        });
+                      }
+                    }
+                  );
+                } else {
+                  // Wrong password
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Incorrect password")),
+                  );
+                }
+               },
+          ),
           ],
         );
       },
     );
   }
+
 
   @override
   void initState() { // similar to onloaded= (in html)
@@ -174,3 +211,59 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class ProfilePage extends StatelessWidget {
+  ProfilePage({super.key});
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Profile Page')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Welcome back: ${DataRepository.loginName}",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                TextField(
+                  controller: _firstNameController,
+                  decoration: InputDecoration(labelText: 'First Name'),
+                ),
+                TextField(
+                  controller: _lastNameController,
+                  decoration: InputDecoration(labelText: 'Last Name'),
+                ),
+                TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(labelText: 'Phone Number'),
+                ),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email Address'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, true); // Return true to trigger SnackBar
+                  },
+                  child: Text("Go Back"),
+                ),
+          ],
+        ),
+      ),
+     ),
+   );
+  }
+}
+
+
