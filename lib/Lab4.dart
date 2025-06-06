@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: "Login name"
                 )
             ),
+            SizedBox(height: 10),  // Add spacing between first and second TextField
             TextField(controller: _controller2,
                 obscureText:true,
                 decoration: InputDecoration(
@@ -78,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: "Password"
                 )
             ),
+            SizedBox(height: 30),  // Add spacing between second TextField and Button
             ElevatedButton(
               onPressed: () {
                 // get the string that was typed in the password field
