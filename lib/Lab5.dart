@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   @override
-  void initState() { // similar to onloaded= (in html)
+  void initState() { // similar to onLoaded= (in html)
     super.initState();
     _controller1 = TextEditingController(); //making _controller
     _controller2 = TextEditingController(); //making _controller
@@ -260,16 +260,63 @@ class ProfilePage extends StatelessWidget {
                   decoration: InputDecoration(labelText: 'Last Name', border: OutlineInputBorder()),
                 ),
                 SizedBox(height: 15),
-                TextField(
-                  controller: _phoneController,
-                  decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+                      ),
+                    ),
+                    SizedBox(width: 2), // spacing
+                    IconButton(
+                      onPressed: () {
+                        final Uri telUri = Uri.parse('tel:${_phoneController.text}');
+                        launchUrl(telUri);
+                      },
+                      icon: Icon(Icons.phone),
+                      tooltip: 'Call',
+                    ),
+                    SizedBox(width: 2,),
+                    IconButton(
+                      onPressed: () {
+                        final Uri smsUri = Uri.parse('sms:${_phoneController.text}');
+                        launchUrl(smsUri);
+                      },
+                      icon: Icon(Icons.sms),
+                      tooltip: 'Call',
+                    ),// spacing
+                  ],
                 ),
+                // TextField(
+                //   controller: _phoneController,
+                //   decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+                // ),
                 SizedBox(height: 15),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _emailController,
+                        decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+                      ),
+                    ),
+                    SizedBox(width: 2), // spacing
+                    IconButton(
+                      onPressed: () {
+                        final Uri mailUri = Uri.parse('mail:${_phoneController.text}');
+                        launchUrl(mailUri);
+                      },
+                      icon: Icon(Icons.mail),
+                      tooltip: 'Call',
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
+                // TextField(
+                //   controller: _emailController,
+                //   decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+                // ),
+                SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context, true); // Return true to trigger SnackBar
