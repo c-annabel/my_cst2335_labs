@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void initState() { // similar to onloaded= (in html)
+  void initState() { // similar to onLoaded= (in html)
     super.initState();
     _controller1 = TextEditingController(); //making _controller
     _controller2 = TextEditingController(); //making _controller
