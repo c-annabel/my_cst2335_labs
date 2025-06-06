@@ -245,11 +245,13 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
                 Text(
                   "Welcome back: ${DataRepository.loginName}",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 15),
+
                 TextField(
                   controller: _firstNameController,
                   decoration: InputDecoration(labelText: 'First Name', border: OutlineInputBorder()),
@@ -262,7 +264,7 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 15),
                 Row(
                   children: [
-                    Expanded(
+                    Flexible(   //can also use Extended
                       child: TextField(
                         controller: _phoneController,
                         decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
@@ -270,22 +272,34 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(width: 2), // spacing
                     IconButton(
-                      onPressed: () {
-                        final Uri telUri = Uri.parse('tel:${_phoneController.text}');
-                        launchUrl(telUri);
+                      onPressed: () async {
+                        final Uri telUri = Uri(scheme: 'tel', path: _phoneController.text);
+                        if (await canLaunchUrl(telUri)) {
+                          await launchUrl(telUri);
+                        } else {
+                          scaffoldMessengerKey.currentState?.showSnackBar(
+                            SnackBar(content: Text("Cannot launch phone dialer")),
+                          );
+                        }
                       },
                       icon: Icon(Icons.phone),
                       tooltip: 'Call',
                     ),
                     SizedBox(width: 2,),
                     IconButton(
-                      onPressed: () {
-                        final Uri smsUri = Uri.parse('sms:${_phoneController.text}');
-                        launchUrl(smsUri);
+                      onPressed: () async {
+                        final Uri smsUri = Uri(scheme: 'sms', path: _phoneController.text);
+                        if (await canLaunchUrl(smsUri)) {
+                          await launchUrl(smsUri);
+                        } else {
+                          scaffoldMessengerKey.currentState?.showSnackBar(
+                            SnackBar(content: Text("Cannot launch SMS app")),
+                          );
+                        }
                       },
                       icon: Icon(Icons.sms),
-                      tooltip: 'Call',
-                    ),// spacing
+                      tooltip: 'SMS',
+                    ),
                   ],
                 ),
                 // TextField(
@@ -295,7 +309,7 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 15),
                 Row(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: TextField(
                         controller: _emailController,
                         decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
@@ -303,12 +317,18 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(width: 2), // spacing
                     IconButton(
-                      onPressed: () {
-                        final Uri mailUri = Uri.parse('mail:${_phoneController.text}');
-                        launchUrl(mailUri);
+                      onPressed: () async {
+                        final Uri mailUri = Uri(scheme: 'mail', path: _emailController.text);
+                        if (await canLaunchUrl(mailUri)) {
+                          await launchUrl(mailUri);
+                        } else {
+                          scaffoldMessengerKey.currentState?.showSnackBar(
+                            SnackBar(content: Text("Cannot launch Email app")),
+                          );
+                        }
                       },
                       icon: Icon(Icons.mail),
-                      tooltip: 'Call',
+                      tooltip: 'Mail',
                     ),
                   ],
                 ),
@@ -323,7 +343,7 @@ class ProfilePage extends StatelessWidget {
                   },
                   child: Text("Go Back"),
                 ),
-          ],
+         ],
         ),
       ),
      ),
