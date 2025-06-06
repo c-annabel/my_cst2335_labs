@@ -34,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
   late String password; // nothing yet, but not null
-  var imageSource = "images/question-mark.png";
 
   void buttonClicked(){
   }
@@ -84,20 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 // get the string that was typed in the password field
                 password = _controller2.text;// <--- lambda function
                 setState(() {
-                  if (password == 'QWERTY123') {
-                    imageSource = "images/idea.png";
-                  }
-                  else {
-                    imageSource = "images/stop.png";
-                  }
+
                 });
               }, // onPressed
               child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
             ),
-            Semantics (
-                label:imageSource,
-                child: Image.asset(imageSource, width: 200, height:200)
-            ),
+
           ],
         ),
       ),
