@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 await _prefs.setString('loginName', _controller1.text);
                 await _prefs.setString('password', _controller2.text);
 
-                print("DEBUG: Saved loginName=${_controller1.text}, password=${_controller2.text}");
+                // print("DEBUG: Saved loginName=${_controller1.text}, password=${_controller2.text}");
 
                 setState(() {
                   // save the login name and password
@@ -162,6 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() { // similar to onLoaded= (in html)
     super.initState();
+
+    // Load repository data ONCE at app start:
+    DataRepository.loadData();
+
     _controller1 = TextEditingController(); //making _controller
     _controller2 = TextEditingController(); //making _controller
 
@@ -245,36 +249,76 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final String welcomeMessage;
+  const ProfilePage({super.key, required this.welcomeMessage});
 
-  ProfilePage({super.key, required this.welcomeMessage});
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+
+class _ProfilePageState extends State<ProfilePage> {
+
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _emailController;
+  bool _snackBarShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize controllers with Repository data:
+    _firstNameController = TextEditingController(text: DataRepository.firstName);
+    _lastNameController = TextEditingController(text: DataRepository.lastName);
+    _phoneController = TextEditingController(text: DataRepository.phoneNumber);
+    _emailController = TextEditingController(text: DataRepository.emailAddress);
+
+    // Add listeners to save data:
+    _firstNameController.addListener(() {
+      DataRepository.firstName = _firstNameController.text;
+      DataRepository.saveData();
+    });
+    _lastNameController.addListener(() {
+      DataRepository.lastName = _lastNameController.text;
+      DataRepository.saveData();
+    });
+    _phoneController.addListener(() {
+      DataRepository.phoneNumber = _phoneController.text;
+      DataRepository.saveData();
+    });
+    _emailController.addListener(() {
+      DataRepository.emailAddress = _emailController.text;
+      DataRepository.saveData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // Show SnackBar when ProfilePage is opened
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scaffoldMessengerKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text(welcomeMessage),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(top: 100, left: 16, right: 16),
-          duration: Duration(seconds: 10),
-        ),
-      );
-    });
+
+    if (!_snackBarShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text(widget.welcomeMessage),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(top: 100, left: 16, right: 16),
+            duration: Duration(seconds: 10),
+          ),
+        );
+        _snackBarShown = true;
+      });
+    }
 
 
-    return Scaffold(
-      appBar: AppBar(title: Text('Profile Page')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+      return Scaffold(
+        appBar: AppBar(title: Text('Profile Page')),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -287,31 +331,36 @@ class ProfilePage extends StatelessWidget {
 
                 TextField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(labelText: 'First Name', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: 'First Name', border: OutlineInputBorder()),
                 ),
                 SizedBox(height: 15),
                 TextField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(labelText: 'Last Name', border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      labelText: 'Last Name', border: OutlineInputBorder()),
                 ),
                 SizedBox(height: 15),
                 Row(
                   children: [
-                    Flexible(   //can also use Extended
+                    Flexible(                         //can also use Expanded
                       child: TextField(
                         controller: _phoneController,
-                        decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+                        decoration: InputDecoration(labelText: 'Phone Number',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     SizedBox(width: 2), // spacing
                     IconButton(
                       onPressed: () async {
-                        final Uri telUri = Uri(scheme: 'tel', path: _phoneController.text);
+                        final Uri telUri = Uri(
+                            scheme: 'tel', path: _phoneController.text);
                         if (await canLaunchUrl(telUri)) {
                           await launchUrl(telUri);
                         } else {
                           scaffoldMessengerKey.currentState?.showSnackBar(
-                            SnackBar(content: Text("Cannot launch phone dialer")),
+                            SnackBar(content: Text(
+                                "Cannot launch phone dialer")),
                           );
                         }
                       },
@@ -321,7 +370,8 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(width: 2,),
                     IconButton(
                       onPressed: () async {
-                        final Uri smsUri = Uri(scheme: 'sms', path: _phoneController.text);
+                        final Uri smsUri = Uri(
+                            scheme: 'sms', path: _phoneController.text);
                         if (await canLaunchUrl(smsUri)) {
                           await launchUrl(smsUri);
                         } else {
@@ -345,13 +395,15 @@ class ProfilePage extends StatelessWidget {
                     Flexible(
                       child: TextField(
                         controller: _emailController,
-                        decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+                        decoration: InputDecoration(labelText: 'Email Address',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     SizedBox(width: 2), // spacing
                     IconButton(
                       onPressed: () async {
-                        final Uri mailUri = Uri(scheme: 'mailto', path: _emailController.text);
+                        final Uri mailUri = Uri(
+                            scheme: 'mailto', path: _emailController.text);
                         if (await canLaunchUrl(mailUri)) {
                           await launchUrl(mailUri);
                         } else {
@@ -372,16 +424,14 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context, true); // Return true to trigger SnackBar
+                    Navigator.pop(
+                        context, true); // Return true to trigger SnackBar
                   },
                   child: Text("Go Back"),
                 ),
-         ],
+              ],
+            ),
+          ),
         ),
-      ),
-     ),
-   );
-  }
-}
-
-
+      );
+    }}
