@@ -7,6 +7,38 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<Scaffol
 class DataRepository {
   static String loginName = "";
   static int age = 0; // optional
+
+  static String firstName = "";
+  static String lastName = "";
+  static String phoneNumber = "";
+  static String emailAddress = "";
+
+  static final EncryptedSharedPreferences _prefs = EncryptedSharedPreferences();
+
+  static Future<void> loadData() async {
+    try {
+      loginName = await _prefs.getString('loginName');
+      firstName = await _prefs.getString('firstName');
+      lastName = await _prefs.getString('lastName');
+      phoneNumber = await _prefs.getString('phoneNumber');
+      emailAddress = await _prefs.getString('emailAddress');
+    } catch (e) {
+      print("Error loading Profile data: $e");
+    }
+  }
+
+  static Future<void> saveData() async {
+    try {
+      await _prefs.setString('loginName', loginName);
+      await _prefs.setString('firstName', firstName);
+      await _prefs.setString('lastName', lastName);
+      await _prefs.setString('phoneNumber', phoneNumber);
+      await _prefs.setString('emailAddress', emailAddress);
+    } catch (e) {
+      print("Error saving Profile data: $e");
+    }
+  }
+
 }
 
 void main() {
@@ -159,11 +191,12 @@ class _MyHomePageState extends State<MyHomePage> {
         print("DEBUG: No saved data found.");
       }
     }
-
     catch (e) {
       print("DEBUG: Exception occurred when loading saved data: $e");
     }
   }
+
+
 
   @override
   void dispose() {
@@ -318,7 +351,7 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(width: 2), // spacing
                     IconButton(
                       onPressed: () async {
-                        final Uri mailUri = Uri(scheme: 'mail', path: _emailController.text);
+                        final Uri mailUri = Uri(scheme: 'mailto', path: _emailController.text);
                         if (await canLaunchUrl(mailUri)) {
                           await launchUrl(mailUri);
                         } else {
