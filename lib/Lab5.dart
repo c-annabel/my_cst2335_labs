@@ -98,17 +98,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push<bool>(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
+                      builder: (context) => ProfilePage(welcomeMessage: "Welcome Back ${DataRepository.loginName}"),
                     ),
                   ).then((value) {
 
                       if (value == true) {
-                        Future.delayed(Duration(milliseconds: 100), () {
-                          scaffoldMessengerKey.currentState?.showSnackBar(
-                            SnackBar(content: Text(
-                                "Welcome Back: ${DataRepository.loginName}")),
-                          );
-                        });
+                        // Future.delayed(Duration(milliseconds: 100), () {
+                        //   scaffoldMessengerKey.currentState?.showSnackBar(
+                        //     SnackBar(content: Text(
+                        //         "Welcome Back: ${DataRepository.loginName}")),
+                        //   );
+                        // });
                       }
                     }
                   );
@@ -213,7 +213,9 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  final String welcomeMessage;
+
+  ProfilePage({super.key, required this.welcomeMessage});
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -222,6 +224,19 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Show SnackBar when ProfilePage is opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scaffoldMessengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text(welcomeMessage),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(top: 100, left: 16, right: 16),
+          duration: Duration(seconds: 10),
+        ),
+      );
+    });
+
+
     return Scaffold(
       appBar: AppBar(title: Text('Profile Page')),
       body: Padding(
@@ -234,24 +249,27 @@ class ProfilePage extends StatelessWidget {
                   "Welcome back: ${DataRepository.loginName}",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 15),
                 TextField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(labelText: 'First Name'),
+                  decoration: InputDecoration(labelText: 'First Name', border: OutlineInputBorder()),
                 ),
+                SizedBox(height: 15),
                 TextField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(labelText: 'Last Name'),
+                  decoration: InputDecoration(labelText: 'Last Name', border: OutlineInputBorder()),
                 ),
+                SizedBox(height: 15),
                 TextField(
                   controller: _phoneController,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
                 ),
+                SizedBox(height: 15),
                 TextField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email Address'),
+                  decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context, true); // Return true to trigger SnackBar
