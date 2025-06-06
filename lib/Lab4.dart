@@ -10,12 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 2 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'Lab 4 : Flutter Demo by Annabel Cheng'),
     );
   }
 }
@@ -33,9 +34,45 @@ class _MyHomePageState extends State<MyHomePage> {
   var myFontSize = 30.0;
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
+  late String loginname;
   late String password; // nothing yet, but not null
 
+  //show AlertDialog asking to save login info
   void buttonClicked(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Save Login Info"),
+          content: Text("Do you want to save your login name and password?"),
+          actions: [
+            TextButton(
+              child: Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop(); // close dialog
+                setState(() {
+                  // clear the saved data
+                  loginname = "";
+                  password = "";
+                });
+              },
+            ),
+            TextButton(
+              child: Text("Yes"),
+              onPressed: () {
+                Navigator.of(context).pop(); // close dialog
+                setState(() {
+                  // save the login name and password
+                  loginname = _controller1.text;
+                  password = _controller2.text;
+                  //
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -81,13 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 30),  // Add spacing between second TextField and Button
             ElevatedButton(
-              onPressed: () {
-                // get the string that was typed in the password field
-                password = _controller2.text;// <--- lambda function
-                setState(() {
-
-                });
-              }, // onPressed
+              onPressed: buttonClicked, // onPressed
               child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
             ),
 
