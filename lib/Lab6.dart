@@ -12,10 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 2 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'Lab 6 : Flutter Demo by Annabel Cheng'),
     );
   }
 }
@@ -30,11 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var myFontSize = 30.0;
+  var myFontSize = 15.0;
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
-  late String password; // nothing yet, but not null
-  var imageSource = "images/question-mark.png";
+  late String itemName;
+  late int itemQuantity; // nothing yet, but not null
 
   void buttonClicked(){
   }
@@ -60,46 +59,44 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
           children: <Widget>[
-            TextField(controller: _controller1,
-                decoration: InputDecoration(
-                    hintText:"Login",
-                    border: OutlineInputBorder(),
-                    labelText: "Login name"
-                )
+            Expanded(
+              child: TextField(
+                    controller: _controller1,
+                    decoration: InputDecoration(
+                      hintText:"Type the item here",
+                      border: OutlineInputBorder(),
+                      //labelText: "Item name"
+                    ),
+                ),
             ),
-            TextField(controller: _controller2,
-                obscureText:true,
-                decoration: InputDecoration(
-                    hintText:"Password",
-                    border: OutlineInputBorder(),
-                    labelText: "Password"
-                )
+            SizedBox(width: 8),
+
+            Expanded(
+              child: TextField(
+                    controller: _controller2,
+                    obscureText:true,
+                    decoration: InputDecoration(
+                        hintText:"Type the quantity here",
+                        border: OutlineInputBorder(),
+                       // labelText: "Quantity number"
+                    )
+              ),
             ),
+            SizedBox(width: 8),
+
             ElevatedButton(
-              onPressed: () {
-                // get the string that was typed in the password field
-                password = _controller2.text;// <--- lambda function
-                setState(() {
-                  if (password == 'QWERTY123') {
-                    imageSource = "images/idea.png";
-                  }
-                  else {
-                    imageSource = "images/stop.png";
-                  }
-                });
-              }, // onPressed
-              child:Text("Login", style: TextStyle(fontSize:myFontSize, color:Colors.lightBlue)),
-            ),
-            Semantics (
-                label:imageSource,
-                child: Image.asset(imageSource, width: 200, height:200)
+              onPressed: (){},
+              child:Text("Add", style: TextStyle(fontSize:myFontSize, color:Colors.purple)),
             ),
           ],
         ),
+
+
+
       ),
     );
   }
