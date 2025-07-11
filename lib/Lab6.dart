@@ -105,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
           Row(
           children: <Widget>[
@@ -151,9 +150,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 onLongPress: () => confirmDelete(index),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Text(
-                    "${index + 1}: ${item['name']}  quantity: ${item['quantity']}",
-                    style: const TextStyle(fontSize: 16),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "${index + 1}: ${item['name']}  quantity: ${item['quantity']}",
+                      style: const TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               );
