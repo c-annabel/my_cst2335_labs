@@ -51,16 +51,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: { '/': (context) => const  MyHomePage(title: 'Lab 5 : Flutter Demo by Annabel Cheng'),
-        '/second': (context) => const ProfilePage(welcomeMessage:'profile'),
-      },
-      initialRoute: '/',
       scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      home: const MyHomePage(title: 'Lab 5 : Flutter Demo by Annabel Cheng'),
     );
   }
 }
@@ -110,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(
               child: Text("Yes"),
               onPressed: () async {
-
+                Navigator.of(context).pop(); // close dialog
 
                 //Save to EncryptedSharedReference
                 await _prefs.setString('loginName', _controller1.text);
@@ -130,18 +127,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 // Now check password (example: correct password is "6789")
                 if (password == "6789") {
-                  Navigator.pushNamed(context, '/second');
+                  Navigator.push<bool>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(welcomeMessage: "Welcome Back ${DataRepository.loginName}"),
+                    ),
+                  ).then((value) {
 
-
+                    if (value == true) {
+                      // Future.delayed(Duration(milliseconds: 100), () {
+                      //   scaffoldMessengerKey.currentState?.showSnackBar(
+                      //     SnackBar(content: Text(
+                      //         "Welcome Back: ${DataRepository.loginName}")),
+                      //   );
+                      // });
+                    }
+                  }
+                  );
                 } else {
-                 Navigator.pop(context);
                   // Wrong password
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Incorrect password")),
                   );
                 }
-               },
-          ),
+              },
+            ),
           ],
         );
       },
@@ -304,124 +314,124 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
 
-      return Scaffold(
-        appBar: AppBar(title: Text('Profile Page')),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+    return Scaffold(
+      appBar: AppBar(title: Text('Profile Page')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
 
-                Text(
-                  "Welcome back: ${DataRepository.loginName}",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 15),
+              Text(
+                "Welcome back: ${DataRepository.loginName}",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 15),
 
-                TextField(
-                  controller: _firstNameController,
-                  decoration: InputDecoration(
-                      labelText: 'First Name', border: OutlineInputBorder()),
-                ),
-                SizedBox(height: 15),
-                TextField(
-                  controller: _lastNameController,
-                  decoration: InputDecoration(
-                      labelText: 'Last Name', border: OutlineInputBorder()),
-                ),
-                SizedBox(height: 15),
-                Row(
-                  children: [
-                    Flexible(                         //can also use Expanded
-                      child: TextField(
-                        controller: _phoneController,
-                        decoration: InputDecoration(labelText: 'Phone Number',
-                            border: OutlineInputBorder()),
-                      ),
+              TextField(
+                controller: _firstNameController,
+                decoration: InputDecoration(
+                    labelText: 'First Name', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 15),
+              TextField(
+                controller: _lastNameController,
+                decoration: InputDecoration(
+                    labelText: 'Last Name', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 15),
+              Row(
+                children: [
+                  Flexible(                         //can also use Expanded
+                    child: TextField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(labelText: 'Phone Number',
+                          border: OutlineInputBorder()),
                     ),
-                    SizedBox(width: 2), // spacing
-                    IconButton(
-                      onPressed: () async {
-                        final Uri telUri = Uri(
-                            scheme: 'tel', path: _phoneController.text);
-                        if (await canLaunchUrl(telUri)) {
-                          await launchUrl(telUri);
-                        } else {
-                          scaffoldMessengerKey.currentState?.showSnackBar(
-                            SnackBar(content: Text(
-                                "Cannot launch phone dialer")),
-                          );
-                        }
-                      },
-                      icon: Icon(Icons.phone),
-                      tooltip: 'Call',
+                  ),
+                  SizedBox(width: 2), // spacing
+                  IconButton(
+                    onPressed: () async {
+                      final Uri telUri = Uri(
+                          scheme: 'tel', path: _phoneController.text);
+                      if (await canLaunchUrl(telUri)) {
+                        await launchUrl(telUri);
+                      } else {
+                        scaffoldMessengerKey.currentState?.showSnackBar(
+                          SnackBar(content: Text(
+                              "Cannot launch phone dialer")),
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.phone),
+                    tooltip: 'Call',
+                  ),
+                  SizedBox(width: 2,),
+                  IconButton(
+                    onPressed: () async {
+                      final Uri smsUri = Uri(
+                          scheme: 'sms', path: _phoneController.text);
+                      if (await canLaunchUrl(smsUri)) {
+                        await launchUrl(smsUri);
+                      } else {
+                        scaffoldMessengerKey.currentState?.showSnackBar(
+                          SnackBar(content: Text("Cannot launch SMS app")),
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.sms),
+                    tooltip: 'SMS',
+                  ),
+                ],
+              ),
+              // TextField(
+              //   controller: _phoneController,
+              //   decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
+              // ),
+              SizedBox(height: 15),
+              Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(labelText: 'Email Address',
+                          border: OutlineInputBorder()),
                     ),
-                    SizedBox(width: 2,),
-                    IconButton(
-                      onPressed: () async {
-                        final Uri smsUri = Uri(
-                            scheme: 'sms', path: _phoneController.text);
-                        if (await canLaunchUrl(smsUri)) {
-                          await launchUrl(smsUri);
-                        } else {
-                          scaffoldMessengerKey.currentState?.showSnackBar(
-                            SnackBar(content: Text("Cannot launch SMS app")),
-                          );
-                        }
-                      },
-                      icon: Icon(Icons.sms),
-                      tooltip: 'SMS',
-                    ),
-                  ],
-                ),
-                // TextField(
-                //   controller: _phoneController,
-                //   decoration: InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder()),
-                // ),
-                SizedBox(height: 15),
-                Row(
-                  children: [
-                    Flexible(
-                      child: TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(labelText: 'Email Address',
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    SizedBox(width: 2), // spacing
-                    IconButton(
-                      onPressed: () async {
-                        final Uri mailUri = Uri(
-                            scheme: 'mailto', path: _emailController.text);
-                        if (await canLaunchUrl(mailUri)) {
-                          await launchUrl(mailUri);
-                        } else {
-                          scaffoldMessengerKey.currentState?.showSnackBar(
-                            SnackBar(content: Text("Cannot launch Email app")),
-                          );
-                        }
-                      },
-                      icon: Icon(Icons.mail),
-                      tooltip: 'Mail',
-                    ),
-                  ],
-                ),
-                // TextField(
-                //   controller: _emailController,
-                //   decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
-                // ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(
-                        context, true); // Return true to trigger SnackBar
-                  },
-                  child: Text("Go Back"),
-                ),
-              ],
-            ),
+                  ),
+                  SizedBox(width: 2), // spacing
+                  IconButton(
+                    onPressed: () async {
+                      final Uri mailUri = Uri(
+                          scheme: 'mailto', path: _emailController.text);
+                      if (await canLaunchUrl(mailUri)) {
+                        await launchUrl(mailUri);
+                      } else {
+                        scaffoldMessengerKey.currentState?.showSnackBar(
+                          SnackBar(content: Text("Cannot launch Email app")),
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.mail),
+                    tooltip: 'Mail',
+                  ),
+                ],
+              ),
+              // TextField(
+              //   controller: _emailController,
+              //   decoration: InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+              // ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(
+                      context, true); // Return true to trigger SnackBar
+                },
+                child: Text("Go Back"),
+              ),
+            ],
           ),
         ),
-      );
-    }}
+      ),
+    );
+  }}
