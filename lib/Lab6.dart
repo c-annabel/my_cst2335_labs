@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -32,17 +31,14 @@ class _MyHomePageState extends State<MyHomePage> {
   var myFontSize = 15.0;
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
-  late String itemName;
-  late int itemQuantity; // nothing yet, but not null
 
-  void buttonClicked(){
-  }
+  List<Map<String, dynamic>> items = []; // [{name: 'Tomato', quantity: 2}]
 
   @override
   void initState() { // similar to onLoaded= (in html)
     super.initState();
-    _controller1 = TextEditingController(); //making _controller
-    _controller2 = TextEditingController(); //making _controller
+    _controller1 = TextEditingController();
+    _controller2 = TextEditingController();//making _controller
   }
 
   @override
@@ -51,6 +47,51 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller2.dispose();
     super.dispose(); //free the memory of what was typed
   }
+
+  void addItem() {
+    String name    = _controller1.text.trim();
+    String qtyText = _controller2.text.trim();
+
+    if (name.isNotEmpty && qtyText.isNotEmpty) {
+      int? quantity = int.tryParse(qtyText);
+
+      if (quantity != null) {
+        setState(() {
+          items.add({"name": name, "quantity": quantity});
+        });
+        _controller1.clear();
+        _controller2.clear();
+      }
+    }
+  }
+
+  void confirmDelete(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Delete item?"),
+          content: Text("Do you want to delete '${words[index]}' from the list?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(), // Cancel
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  words.removeAt(index);
+                });
+                Navigator.of(context).pop(); // Confirm
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +130,32 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(width: 8),
 
             ElevatedButton(
-              onPressed: (){},
-              child:Text("Add", style: TextStyle(fontSize:myFontSize, color:Colors.purple)),
+              onPressed: addItem,
+              child:Text("Add", style: TextStyle(fontSize:myFontSize, color:Colors.deepPurple)),
             ),
           ],
         ),
 
+        // ListView
+        const SizedBox(height: 20),
+        Expanded(
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return GestureDetector(
+                onLongPress: () => confirmDelete(index),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    "${index + 1}: ${item['name']}  quantity: ${item['quantity']}",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
 
 
       ),
