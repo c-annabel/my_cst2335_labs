@@ -103,8 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+          Row(
           children: <Widget>[
             Expanded(
               child: TextField(
@@ -159,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
 
-
+       ],),
       ),
     );
   }
