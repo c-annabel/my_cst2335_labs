@@ -105,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
           Row(
           children: <Widget>[
@@ -123,7 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: TextField(
                     controller: _controller2,
-                    obscureText:true,
                     decoration: InputDecoration(
                         hintText:"Type the quantity here",
                         border: OutlineInputBorder(),
