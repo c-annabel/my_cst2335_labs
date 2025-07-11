@@ -71,18 +71,20 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Delete item?"),
-          content: Text("Do you want to delete '${words[index]}' from the list?"),
+          content: Text("Do you want to remove \"${items[index]['name']}\" from the list?"),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(), // Cancel
+              onPressed: () {
+                Navigator.pop(context); // close dialog
+              },
               child: const Text("No"),
             ),
             TextButton(
               onPressed: () {
                 setState(() {
-                  words.removeAt(index);
+                  items.removeAt(index);
                 });
-                Navigator.of(context).pop(); // Confirm
+                Navigator.pop(context);
               },
               child: const Text("Yes"),
             ),
