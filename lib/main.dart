@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'database/tododatabase.dart';
+import 'entity/todo.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = await $FloorToDoDatabase
+  .databaseBuilder('todo_database.db').build();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ToDoDatabase database;
+
+  const MyApp(this.database, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +21,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 6 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'Lab 7 : Flutter Demo by Annabel Cheng', database: database),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+
   final String title;
+  final ToDoDatabase database;
+
+  const MyHomePage({super.key, required this.title, required this.database});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -32,13 +42,21 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller1; // this is to read what is typed
   late TextEditingController _controller2; // this is to read what is typed
 
-  List<Map<String, dynamic>> items = []; // [{name: 'Tomato', quantity: 2}]
+  List<ToDo> items = []; // [{name: 'Tomato', quantity: 2}]
 
   @override
   void initState() { // similar to onLoaded= (in html)
     super.initState();
     _controller1 = TextEditingController();
     _controller2 = TextEditingController();//making _controller
+    loadItemsFromDb();
+  }
+
+  Future<void> loadItemsFromDb() async {
+    final list = await widget.database.todoDao.findAllToDos();
+    setState(() {
+      items = list;
+    });
   }
 
   @override
