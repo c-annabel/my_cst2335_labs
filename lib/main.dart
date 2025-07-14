@@ -5,8 +5,8 @@ import 'entity/todo.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final database = await $FloorToDoDatabase
-  .databaseBuilder('todo_database.db').build();
-  runApp(const MyApp());
+        .databaseBuilder('todo_database.db').build();
+  runApp(MyApp(database));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 7 : Flutter Demo by Annabel Cheng', database: database),
+      home: MyHomePage(title: 'Lab 7 : Flutter Demo by Annabel Cheng', database: database),
     );
   }
 }
@@ -66,20 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose(); //free the memory of what was typed
   }
 
-  void addItem() {
-    String name    = _controller1.text.trim();
-    String qtyText = _controller2.text.trim();
+  void addItem() async {
+    final name = _controller1.text.trim();
+    final quantity = _controller2.text.trim();
 
-    if (name.isNotEmpty && qtyText.isNotEmpty) {
-      int? quantity = int.tryParse(qtyText);
-
-      if (quantity != null) {
-        setState(() {
-          items.add({"name": name, "quantity": quantity});
-        });
-        _controller1.clear();
-        _controller2.clear();
-      }
+    if (name.isNotEmpty && quantity.isNotEmpty) {
+      final todo = ToDo(name: name, quantity: quantity);
+      await widget.database.todoDao.insertToDo(todo);
+      _controller1.clear();
+      _controller2.clear();
+      loadItemsFromDb();
     }
   }
 
@@ -89,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Delete item?"),
-          content: Text("Do you want to remove \"${items[index]['name']}\" from the list?"),
+          content: Text("Do you want to remove \"${items[index].name}\" from the list?"),
           actions: [
             TextButton(
               onPressed: () {
@@ -98,11 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text("No"),
             ),
             TextButton(
-              onPressed: () {
-                setState(() {
-                  items.removeAt(index);
-                });
-                Navigator.pop(context);
+            onPressed: () async {
+               await widget.database.todoDao.deleteToDo(items[index]);
+               Navigator.pop(context);
+               loadItemsFromDb();
               },
               child: const Text("Yes"),
             ),
@@ -171,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "${index + 1}: ${item['name']}  quantity: ${item['quantity']}",
+                          "${index + 1}: ${item.name}  quantity: ${item.quantity}",
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
