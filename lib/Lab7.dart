@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Lab 6 : Flutter Demo by Annabel Cheng'),
+      home: const MyHomePage(title: 'Lab 7 : Flutter Demo by Annabel Cheng'),
     );
   }
 }
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller2; // this is to read what is typed
 
   List<Map<String, dynamic>> items = []; // [{name: 'Tomato', quantity: 2}]
-  //use this in several funcations, initialize initState
+  //use this in several functions, initialize initState
   late var myDAO;
 
   @override
