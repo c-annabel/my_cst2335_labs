@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ShoppingItemDatabase.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -33,12 +35,25 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller2; // this is to read what is typed
 
   List<Map<String, dynamic>> items = []; // [{name: 'Tomato', quantity: 2}]
+  //use this in several funcations, initialize initState
+  late var myDAO;
 
   @override
   void initState() { // similar to onLoaded= (in html)
     super.initState();
     _controller1 = TextEditingController();
     _controller2 = TextEditingController();//making _controller
+
+    //open the database: (tool generator)                             //db must be unique:
+    //final database= await $FloorShoppingItemDatabase.databaseBuilder('shoppingItem_database.db').build();
+    $FloorShoppingItemDatabase.databaseBuilder('shoppingItem_database.db').build().then((database) async{
+      // by now, database variable has all the objects:
+      var myDAO = database.getDao;
+      // get all objects from database with Query:
+      var results = await myDAO.getAllShoppingItems().then((listOfResults){});
+      // add results to out list:
+      items = results;
+    });
   }
 
   @override
@@ -58,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (quantity != null) {
         setState(() {
           items.add({"name": name, "quantity": quantity});
+          myDAO.addShoppingItem({"name": name, "quantity": quantity});
         });
         _controller1.clear();
         _controller2.clear();
