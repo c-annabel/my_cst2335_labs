@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'database/tododatabase.dart';
 import 'entity/todo.dart';
+import 'details.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller2; // this is to read what is typed
 
   List<ToDo> items = []; // [{name: 'Tomato', quantity: 2}]
+  ToDo? selectedItem;
 
   @override
   void initState() { // similar to onLoaded= (in html)
