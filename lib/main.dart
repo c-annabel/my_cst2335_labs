@@ -18,11 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: MyHomePage(title: 'Lab 7 : Flutter Demo by Annabel Cheng', database: database),
+      home: MyHomePage(title: 'Lab 9: Flutter Demo by Annabel Cheng', database: database),
     );
   }
 }
@@ -81,105 +82,87 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void confirmDelete(int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Delete item?"),
-          content: Text("Do you want to remove \"${items[index].name}\" from the list?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // close dialog
-              },
-              child: const Text("No"),
-            ),
-            TextButton(
-            onPressed: () async {
-               await widget.database.todoDao.deleteToDo(items[index]);
-               Navigator.pop(context);
-               loadItemsFromDb();
-              },
-              child: const Text("Yes"),
-            ),
-          ],
-        );
-      },
-    );
+  void deleteItem(ToDo item) async {
+    await widget.database.todoDao.deleteToDo(item);
+    setState(() {
+      selectedItem = null;
+    });
+    loadItemsFromDb();
   }
 
+  void closeDetails() {
+    setState(() {
+      selectedItem = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isWideScreen = MediaQuery.of(context).size.width > 720;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    controller: _controller1,
-                    decoration: InputDecoration(
-                      hintText:"Type the item here",
-                      border: OutlineInputBorder(),
-                      //labelText: "Item name"
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8),
-
-                Expanded(
-                  child: TextField(
-                      controller: _controller2,
-                      decoration: InputDecoration(
-                        hintText:"Type the quantity here",
-                        border: OutlineInputBorder(),
-                        // labelText: "Quantity number"
-                      )
-                  ),
-                ),
-                SizedBox(width: 8),
-
-                ElevatedButton(
-                  onPressed: addItem,
-                  child:Text("Add", style: TextStyle(fontSize:myFontSize, color:Colors.deepPurple)),
-                ),
-              ],
-            ),
-
-            // ListView
-            const SizedBox(height: 20),
+      appBar: AppBar(title: Text(widget.title, style: TextStyle(color: Colors.white)), backgroundColor: Colors.deepPurple),
+      body: isWideScreen ? Row(
+        children: [
+          Expanded(child: buildList()),
+          VerticalDivider(),
+          if (selectedItem != null)
             Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return GestureDetector(
-                    onLongPress: () => confirmDelete(index),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${index + 1}: ${item.name}  quantity: ${item.quantity}",
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              child: DetailsPage(
+                item: selectedItem!,
+                onDelete: () => deleteItem(selectedItem!),
+                onClose: closeDetails,
               ),
             ),
-
-          ],),
+        ],
+      ) : selectedItem == null ? buildList() : DetailsPage(
+        item: selectedItem!,
+        onDelete: () => deleteItem(selectedItem!),
+        onClose: closeDetails,
       ),
+    );
+  }
+
+  Widget buildList() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _controller1,
+                decoration: InputDecoration(labelText: "Item name"),
+              ),
+              TextField(
+                controller: _controller2,
+                decoration: InputDecoration(labelText: "Quantity"),
+              ),
+              ElevatedButton(
+                onPressed: addItem,
+                child: Text("Add Item"),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return ListTile(
+                title: Text(item.name),
+                subtitle: Text("Quantity: ${item.quantity}"),
+                onTap: () {
+                  setState(() {
+                    selectedItem = item;
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

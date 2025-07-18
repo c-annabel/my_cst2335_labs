@@ -29,8 +29,8 @@ class DetailsPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () => onDelete(),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  child: Text("Delete"),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+                  child: Text("Delete", style: TextStyle(color: Colors.white)),
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
