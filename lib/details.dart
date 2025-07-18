@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'entity/todo.dart';
-import 'database/tododatabase.dart';
 
 class DetailsPage extends StatelessWidget {
   final ToDo item;
@@ -19,12 +18,12 @@ class DetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Item Name: ${item.name}", style: TextStyle(fontSize: 20)),
+            Text("ID: ${item.id}", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text("Item: ${item.name}", style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),
             Text("Quantity: ${item.quantity}", style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
-            Text("ID: ${item.id}", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 20),
             Row(
               children: [
                 ElevatedButton(
@@ -32,7 +31,7 @@ class DetailsPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
                   child: Text("Delete", style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(width: 10),
+                SizedBox(height: 80, width: 10),
                 ElevatedButton(
                   onPressed: () => onClose(),
                   child: Text("Close"),

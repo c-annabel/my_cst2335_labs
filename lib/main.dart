@@ -138,9 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 controller: _controller2,
                 decoration: InputDecoration(labelText: "Quantity"),
               ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: addItem,
-                child: Text("Add Item"),
+                child: Text("Add Item", style: TextStyle(fontSize: 15)),
               ),
             ],
           ),
@@ -151,8 +152,13 @@ class _MyHomePageState extends State<MyHomePage> {
             itemBuilder: (context, index) {
               final item = items[index];
               return ListTile(
-                title: Text(item.name),
-                subtitle: Text("Quantity: ${item.quantity}"),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("${item.name}   ==> "),
+                    Text("Quantity: ${item.quantity}"),
+                  ],
+                ),
                 onTap: () {
                   setState(() {
                     selectedItem = item;
